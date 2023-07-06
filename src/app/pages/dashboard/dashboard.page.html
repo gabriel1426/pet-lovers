@@ -1,0 +1,77 @@
+
+<ion-content [fullscreen]="true" scroll-y="false">
+  <div  class="container">
+    <div class="container__title">
+      <div>
+        <p> {{ 'appName' | translate }}</p>
+      </div>
+      <div class="container__favorite center" (click)="showFavorites(true)">
+        <i *ngIf="!showSaved" class="pets-icons icon__star-filled"></i>
+        <i *ngIf="showSaved" class="pets-icons icon__return"></i>
+      </div>
+    </div>
+
+    <div class="container__filter">
+      <div class="container__filter-item" [ngClass]="optionSelected === 0 ? 'container__filter-selected': ''"  (click)="changeFilter(0)">
+        <img [ngSrc]="'assets/img/test.jpeg'" alt="all" width="32" height="32">
+        <p class="margin-left--8"> {{ !showSaved ? 'all': 'favorites' | translate }} </p>
+      </div>
+
+      <div class="container__filter-item" [ngClass]="optionSelected === 1 ? 'container__filter-selected': ''" (click)="changeFilter(1)">
+        <img [ngSrc]="'assets/img/cat.jpeg'" alt="all" width="32" height="32" >
+        <p class="margin-left--8"> {{ 'cats' | translate }} </p>
+      </div>
+      <div class="container__filter-item" [ngClass]="optionSelected === 2 ? 'container__filter-selected': ''"  (click)="changeFilter(2)">
+        <img [ngSrc]="'assets/img/dog.jpeg'" alt="all" width="32" height="32" >
+        <p class="margin-left--8"> {{ 'dogs' | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bridge"></div>
+  <div *ngIf="!showLoader; else skeleton" >
+    <div *ngIf="data.length === 0" class="no-pets">
+      <img src="assets/img/no-pets.jpg" alt="">
+      <p> You don't have any favorite pets </p>
+    </div>
+    <div class="pet">
+      <div *ngFor="let pet of data" class="pet__card" (click)="goToDetail(pet)" >
+        <div class="pet__image-container">
+          <img *ngIf="!pet.image; else dogImg" class="pet__image" ngSrc="https://cdn2.thecatapi.com/images/{{pet.reference_image_id}}.jpg" (error)="imagenError($event, pet.reference_image_id, pet)" alt="" fill>
+          <ng-template #dogImg>
+            <img class="pet__image" [ngSrc]="pet.image['url']" alt="" fill>
+          </ng-template>
+        </div>
+        <p class="pet__name"> {{ pet.name }}</p>
+        <div class="pet__facts-container">
+          <div class="pet__facts" *ngIf="pet.origin">
+            <i class="pets-icons icon__pin"></i>
+            <span> {{ pet.origin }} </span>
+          </div>
+          <div class="pet__facts">
+            <i class="pets-icons icon__heart"></i>
+            <span> {{ pet.life_span }} years</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+  </div>
+
+  <ng-template #skeleton>
+    <div class="pet">
+      <div *ngFor="let _ of [].constructor(6)" class="pet__card">
+        <ion-skeleton-text [animated]="true" style="width: 100%; height: 130px; margin: 0px"></ion-skeleton-text>
+        <div class="pet__facts-container">
+          <div class="pet__facts">
+            <ion-skeleton-text [animated]="true" style="width: 100px; height: 20px; border-radius: 5px"></ion-skeleton-text>
+          </div>
+          <div class="pet__facts">
+            <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,52 @@
+<ion-content [fullscreen]="true" scroll-y="false" class="article">
+  <section class="article__header">
+    <div class="article__back" (click)="goBack()">
+      <i class="pets-icons icon__back"></i>
+    </div>
+    <div class="article__favorite" (click)="saveFavorite()">
+      <i class="pets-icons" [ngClass]=" isFavorite ? 'icon__star-filled' : 'icon__star'"></i>
+    </div>
+  </section>
+
+  <section class="article__content">
+    <app-gallery [breed]="pet.id" [type]="pet.type"></app-gallery>
+    <p class="article__title">
+      {{ pet.name }}
+    </p>
+
+    <div class="article__facts" #divFacts>
+      <div *ngFor="let origin of origins" class="article__fact-content">
+        <img class="article__origin-image" *ngIf="origin.flag" ngSrc="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/flags/1x1/{{origin.flag | lowercase}}.svg" alt="" width="24" height="24">
+        <p class="article__fact-text"> {{ origin.name }} </p>
+      </div>
+      <div *ngFor="let fact of facts" class="article__fact-content">
+        <p class="article__fact-text"> {{ fact }} </p>
+      </div>
+    </div>
+
+    <p class="article__description"> {{ pet.description }} </p>
+
+    <div class="article__characteristics">
+      <span> {{ 'characteristics' | translate }} </span>
+
+      <p *ngIf="pet.weight"> <li> {{'breedWeight' | translate: { weight: pet.weight.metric } }} </p>
+      <p *ngIf="pet.height"> <li> {{'breedHeight' | translate: { height: pet.height.metric } }} </p>
+      <p *ngIf="pet.life_span && pet.type === 'cat'"> <li> {{'breedLifeSpanCats' | translate: { years: pet.life_span } }} </p>
+      <p *ngIf="pet.life_span && pet.type === 'dog'"> <li> {{'breedLifeSpanDogs' | translate: { years: pet.life_span } }} </p>
+
+      <div *ngFor="let characteristic of characteristics">
+        <p><li>  {{ characteristic.name }} </p>
+        <ion-progress-bar  [value]="characteristic.value"></ion-progress-bar>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+  </section>
+
+</ion-content>
+
+<ion-footer class="article__footer" *ngIf="pet.type === 'cat'" >
+  <ion-button expand="block" (click)="nowMore()"> {{ 'nowMore' | translate }}</ion-button>
+</ion-footer>

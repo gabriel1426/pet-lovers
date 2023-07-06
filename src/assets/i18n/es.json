@@ -1,0 +1,18 @@
+{
+  "appName": "Pet Lovers",
+  "homeMessage": "Happiness is closer than you think",
+  "letsGo": "Let’s Go!",
+  "all": "All",
+  "cats": "Cats",
+  "dogs": "Dogs",
+  "breeds": "Breeds",
+  "nowMore": "Now More",
+  "characteristics": "Characteristics",
+  "cancel": "Cancel",
+  "ok": "Ok",
+  "breedWeight": "Can weigh between {{ weight }} kg",
+  "breedHeight": "Can measure between {{ height }} cm",
+  "breedLifeSpanCats": "Has a life expectancy of between {{ years }} years",
+  "breedLifeSpanDogs": "Has a life expectancy of between {{ years }}",
+  "favorites": "Saved"
+}

@@ -1,0 +1,41 @@
+.article {
+  &__swiper {
+    position: relative;
+    border-radius: 32px ;
+    height: 360px;
+    width: 100%;
+
+  }
+
+  &__image {
+    height: 100%;
+    width: 100%;
+  }
+
+  &__pagination {
+    position: absolute;
+    display: flex;
+    bottom: 30px;
+    height: 10px;
+    width: 80px;
+    right: 20px;
+    z-index: 5;
+  }
+
+  &__bullet {
+    width: 16px;
+    height: 100%;
+    background: white;
+    margin-right: 4px;
+    border-radius: 32px;
+  }
+
+  &__bullet-active {
+    background: var(--ion-color-primary);
+    border-radius: 32px;
+    margin-right: 4px;
+    height: 100%;
+    width: 32px;
+  }
+
+}

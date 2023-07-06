@@ -1,0 +1,14 @@
+<ion-content [fullscreen]="true" class="home" scroll-y="false">
+  <div class="home__background">
+    <img class="home__background-img" [ngSrc]="'assets/img/background.webp'" fill>
+  </div>
+
+  <div class="home__content">
+    <p class="home__title"> {{ 'appName' | translate }}</p>
+  </div>
+</ion-content>
+
+<ion-footer class="home__footer">
+  <p class="home__message"> {{'homeMessage' | translate}} </p>
+  <ion-button expand="block" (click)="goToDashboard()"> {{ 'letsGo' | translate }}</ion-button>
+</ion-footer>

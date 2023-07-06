@@ -1,0 +1,50 @@
+i {
+  &[class*='pets-icons'] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    background: currentColor;
+  }
+}
+
+@mixin icon-common-size {
+  width: 1rem;
+  height: 1rem;
+}
+
+@mixin icon-common-size-2 {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon {
+  &__pin {
+    @include icon-common-size;
+    mask-image: url("../assets/icon/pin.svg");
+  }
+
+  &__heart{
+    @include icon-common-size;
+    mask-image: url("../assets/icon/hearts.svg");
+  }
+
+  &__star {
+    @include icon-common-size;
+    mask-image: url("../assets/icon/star.svg");
+  }
+
+  &__star-filled {
+    @include icon-common-size;
+    mask-image: url("../assets/icon/star-filled.svg");
+  }
+
+  &__back {
+    @include icon-common-size-2;
+    mask-image: url("../assets/icon/chevron-left.svg");
+  }
+
+  &__return {
+    @include icon-common-size;
+    mask-image: url("../assets/icon/arrow-back-up.svg");
+  }
+}

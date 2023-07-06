@@ -1,0 +1,11 @@
+<div style="position: relative" >
+
+  <swiper-container class="article__swiper" events-prefix="swiper-" init="false" space-between="20"></swiper-container>
+
+  <div class="article__pagination" *ngIf="showPagination">
+    <span class="article__bullet" [ngClass]="{'article__bullet-active' : bulletActive === 1}"></span>
+    <span class="article__bullet" [ngClass]="{'article__bullet-active' : bulletActive === 2}"></span>
+    <span class="article__bullet" [ngClass]="{'article__bullet-active' : bulletActive === 3}"></span>
+  </div>
+
+</div>

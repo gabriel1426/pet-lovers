@@ -24,3 +24,30 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+@import "./theme/icons.scss";
+@import "./theme/pet-spaces.scss";
+
+
+@font-face {
+  font-family: "Trebuchet MS";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/TrebuchetMS.ttf");
+}
+
+* {
+  font-family: var(--Trebuchet);
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-pagination-bullet .swiper-pagination-bullet-active {
+  width: 16rem!important;
+  --swiper-pagination-bullet-width: 1rem;
+  --swiper-pagination-bullet-size: 1rem;
+}
