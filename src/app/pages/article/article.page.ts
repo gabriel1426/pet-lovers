@@ -1,14 +1,12 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
-  NgZone,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 import { Image, Pet } from '../../services/model/pet.model';
 import { PetsService } from '../../services/pets.service';
 import { OriginsModel } from './model/origins.model';
@@ -23,6 +21,7 @@ import { StorageService } from '../../core/storage/storage-service';
   styleUrls: ['./article.page.scss'],
 })
 export class ArticlePage implements OnInit, AfterViewInit {
+  @ViewChild(IonContent) content: IonContent;
   @ViewChild('divFacts') factsContainer!: ElementRef;
 
   public pet: Pet;
@@ -32,6 +31,7 @@ export class ArticlePage implements OnInit, AfterViewInit {
   public origins: OriginsModel[] = [];
   public characteristics: CharacteristicsModel[] = [];
   public buttons: ActionSheetButton[] = [];
+  private favorites: Pet[] = []
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -40,8 +40,19 @@ export class ArticlePage implements OnInit, AfterViewInit {
     private actionSheetCtrl: ActionSheetController,
     private storage: StorageService
   ) {
-    this.route?.queryParams.subscribe((params) => {
+    this.route?.queryParams.subscribe( (params) => {
       this.pet = params['pet'];
+    });
+  }
+
+  private headerEffect() {
+    const header = document.getElementById('header');
+    const bridgeHeader = document.getElementById('bridge-header');
+    this.content.ionScroll.subscribe((event) => {
+      const opacity = event.detail.currentY / 100; // Cambia 200 según tus necesidades
+      const limitedOpacity = Math.min(1, Math.max(0, opacity));
+      header!.style.backgroundColor = `rgba(255, 255, 255, ${limitedOpacity})`;
+      bridgeHeader!.style.backgroundColor = `rgba(255, 255, 255, ${limitedOpacity})`;
     });
   }
 
@@ -49,16 +60,19 @@ export class ArticlePage implements OnInit, AfterViewInit {
     this.getFacts();
     this.getCharacteristics();
     this.getWebs();
-    console.log(await this.storage.getItem(this.pet.id));
-    this.isFavorite = !!(await this.storage.getItem(this.pet.id));
+    this.favorites = await this.storage.getItem<Pet[]>('favorites') || [];
+    console.log(this.favorites)
+    console.log(this.pet)
+    this.isFavorite = !!this.favorites.find((elemento) => elemento.id === this.pet.id)
+
   }
 
   ngAfterViewInit(): void {
     const childDivs = this.factsContainer.nativeElement.querySelectorAll('div');
     childDivs.forEach((div: HTMLElement) => {
       div.style.background = this.getRandomColor();
-      console.log(div.innerText);
     });
+    this.headerEffect();
   }
 
   goBack() {
@@ -67,10 +81,11 @@ export class ArticlePage implements OnInit, AfterViewInit {
 
   async saveFavorite() {
     if (!this.isFavorite) {
-      await this.storage.setItem(this.pet.id, this.pet);
+      this.favorites.push(this.pet)
     } else {
-      await this.storage.deleteItem(this.pet.id);
+      this.favorites = this.favorites.filter((elemento) => elemento.id !== this.pet.id);
     }
+    await this.storage.setItem('favorites', this.favorites);
     this.isFavorite = !this.isFavorite;
   }
 
@@ -214,6 +229,7 @@ export class ArticlePage implements OnInit, AfterViewInit {
       },
     });
   }
+
   async nowMore() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'More Information',
@@ -225,6 +241,5 @@ export class ArticlePage implements OnInit, AfterViewInit {
 
   goTo(url: string) {
     window.open(url, '_system', 'location=yes');
-    console.log(url);
   }
 }

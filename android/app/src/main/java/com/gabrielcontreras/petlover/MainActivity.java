@@ -1,4 +1,4 @@
-package cg.ionic.pet_lover;
+package com.gabrielcontreras.petlover;
 
 import com.getcapacitor.BridgeActivity;
 

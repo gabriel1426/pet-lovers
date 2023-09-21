@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PetsService } from '../../services/pets.service';
 import { Pet } from '../../services/model/pet.model';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { StorageService } from '../../core/storage/storage-service';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +12,8 @@ import { SplashScreen } from '@capacitor/splash-screen';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+  private readonly MILLISECONDS = 86400000;
+
   public petData: Pet[] = [];
   public catsData: Pet[] = [];
   public dogsData: Pet[] = [];
@@ -26,35 +27,59 @@ export class DashboardPage implements OnInit {
   constructor(
     private petService: PetsService,
     private navController: NavController,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private platform: Platform
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    const { cats, dogs, lastRequest } =
+      await this.storageService.getMultipleItems<any>([
+        'cats',
+        'dogs',
+        'lastRequest',
+      ]);
+    const currentDate: any = new Date();
+    const lastDate: any = new Date(lastRequest);
+    const difference: any = currentDate - lastDate;
+    if (cats && dogs && difference < this.MILLISECONDS) {
+      this.initValues(cats, dogs);
+      return;
+    }
+
     this.petService.getData().subscribe(({ catsRequest, dogsRequest }) => {
-      this.catsData = catsRequest;
-      this.dogsData = dogsRequest;
-
-      this.petData.push(...this.catsData);
-      this.petData.push(...this.dogsData);
-
-      this.petData.sort((pet1, pet2) => {
-        if (pet1.name > pet2.name) {
-          return 1;
-        }
-        if (pet1.name < pet2.name) {
-          return -1;
-        }
-        return 0;
-      });
-
-      this.data = this.petData;
-      this.showLoader = false;
+      this.storageService.setItem('cats', catsRequest);
+      this.storageService.setItem('dogs', dogsRequest);
+      this.storageService.setItem('lastRequest', new Date());
+      this.initValues(catsRequest, dogsRequest);
     });
   }
 
+  private initValues(cats: Pet[], dogs: Pet[]) {
+    this.catsData = cats;
+    this.dogsData = dogs;
+
+    this.petData.push(...this.catsData);
+    this.petData.push(...this.dogsData);
+
+    this.petData.sort((pet1, pet2) => {
+      if (pet1.name > pet2.name) {
+        return 1;
+      }
+      if (pet1.name < pet2.name) {
+        return -1;
+      }
+      return 0;
+    });
+    this.data = this.petData || [];
+    this.showLoader = false;
+  }
+
   async ionViewDidEnter() {
-    await StatusBar.setBackgroundColor({ color: '#FFFFFF' });
-    await StatusBar.setStyle({ style: Style.Light });
+    if (this.platform.is('capacitor')) {
+      await StatusBar.setBackgroundColor({ color: '#FFFFFF' });
+      await StatusBar.setStyle({ style: Style.Light });
+    }
+
     if (this.showSaved) {
       await this.showFavorites(false);
     }
@@ -81,8 +106,7 @@ export class DashboardPage implements OnInit {
   }
 
   async showFavorites(changeList: boolean) {
-    const petSaved: Pet[] = await this.storageService.getAllItems();
-    console.log('hola');
+    const petSaved: Pet[] = await this.storageService.getItem('favorites') || [];
     this.data =
       changeList && !this.showSaved
         ? petSaved
@@ -90,11 +114,8 @@ export class DashboardPage implements OnInit {
         ? petSaved
         : this.petData;
     this.showSaved =
-      changeList && !this.showSaved
-        ? true
-        : !changeList && this.showSaved
-        ? true
-        : false;
+      changeList && !this.showSaved ? true : !changeList && this.showSaved;
+
     this.optionSelected = 0;
   }
 

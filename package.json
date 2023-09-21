@@ -1,6 +1,6 @@
 {
   "name": "pet-lovers",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -10,22 +10,23 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "format": "prettier --write 'src/**/*.ts'",
     "generate-resorces": "npx capacitor-assets generate --iconBackgroundColor '#F2968F' --iconBackgroundColorDark '#F2968F' --splashBackgroundColor '#F2968F' --splashBackgroundColorDark '#F2968F'",
     "app:sync": "ionic capacitor sync",
     "app:sync:android:prod": "ionic capacitor sync --prod --android --configuration=production",
     "app:sync:ios:prod": "ionic capacitor sync --prod --ios --configuration=production",
     "app:add:android": "ionic capacitor add android",
     "generate:android": "npm run app:sync && cd android && ./gradlew assembleDebug",
-    "generate:android:prod": "npm run app:sync:android:prod && cd android && ./gradlew assembleDebug && cd .. && npm run app:run:android --prod",
+    "generate:android:prod": "npm run app:sync:android:prod && cd android && ./gradlew bundleRelease && cd ..",
     "app:run:android": "npx cap run android",
-    "setup:android:prod": "rm -rf android && npm run app:add:android && npm run app:sync:android:prod && npm run generate:android:prod",
+    "setup:android:prod": "rm -rf android && npm run app:add:android && npm run generate-resorces && npm run generate:android:prod",
     "generate-ios": "npm run app:sync --ios && npm run app:run:ios",
     "app:run:ios": "npx cap run ios",
     "app:add:ios": "ionic capacitor add ios",
     "pod:ios": "cd ios/App && rm Podfile.lock && pod install",
     "setup:ios:local": "rm -rf ios && npm run app:add:ios && npm run app:sync &&  node npm run pod:ios && npm run generate-ios",
-    "setup:ios:prod": "rm -rf ios && npm run app:add:ios && npm run app:sync:ios:prod && npm run pod:ios && npm run generate-ios:prod"
+    "setup:ios:prod": "rm -rf ios && npm run app:add:ios && npm run app:sync:ios:prod && npm run pod:ios && npm run generate-ios:prod",
+    "SignAndroidApp": "jarsigner -keystore /Users/gabriel.contreras/Documents/Portafolio/memorana/certificates/memorama.keystore.jks -storepass gabriel1426CA /Users/gabriel.contreras/Documents/Portafolio/memorana/android/app/build/outputs/apk/release/app-release-unsigned.apk Memorama",
+    "SignAndroidAppAAB": " jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore ./certificates/petlovers.keystore.jks -storepass gabriel1426CA ./android/app/build/outputs/bundle/release/app-release.aab petlovers"
   },
   "private": true,
   "dependencies": {

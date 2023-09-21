@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Pet lovers</string>
-    <string name="title_activity_main">Pet lovers</string>
-    <string name="package_name">cg.ionic.pet_lover</string>
-    <string name="custom_url_scheme">cg.ionic.pet_lover</string>
+    <string name="app_name">Pet Lovers</string>
+    <string name="title_activity_main">Pet Lovers</string>
+    <string name="package_name">com.gabrielcontreras.petlover</string>
+    <string name="custom_url_scheme">com.gabrielcontreras.petlover</string>
 </resources>

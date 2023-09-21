@@ -6,9 +6,10 @@
   <div class="home__content">
     <p class="home__title"> {{ 'appName' | translate }}</p>
   </div>
+
+  <section class="home__footer">
+    <p class="home__message"> {{'homeMessage' | translate}} </p>
+    <ion-button expand="block" (click)="goToDashboard()"> {{ 'letsGo' | translate }}</ion-button>
+  </section>
 </ion-content>
 
-<ion-footer class="home__footer">
-  <p class="home__message"> {{'homeMessage' | translate}} </p>
-  <ion-button expand="block" (click)="goToDashboard()"> {{ 'letsGo' | translate }}</ion-button>
-</ion-footer>

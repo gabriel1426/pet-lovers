@@ -7,6 +7,7 @@ import { ArticlePage } from './article.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { GalleryComponent } from './components/gallery/gallery.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { GalleryComponent } from './components/gallery/gallery.component';
     ArticlePageRoutingModule,
     NgOptimizedImage,
     TranslateModule,
+    SharedModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ArticlePage, GalleryComponent],

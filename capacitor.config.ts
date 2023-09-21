@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'cg.ionic.pet_lover',
+  appId: 'com.gabrielcontreras.petlover',
   appName: 'Pet Lovers',
   webDir: 'www',
   server: {
@@ -11,6 +11,9 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchShowDuration: 10000,
       launchAutoHide: false,
+    },
+    CapacitorUpdater: {
+      autoUpdate: false,
     },
     CapacitorSQLite: {
       iosDatabaseLocation: 'Library/CapacitorDatabase',

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage-service';
 import { Storage } from '@ionic/storage-angular';
-import { Pet } from '../../services/model/pet.model';
 
 @Injectable()
 export class StorageImplService extends StorageService {
   private _storage: Storage | null = null;
+
   constructor(private storage: Storage) {
     super();
   }
@@ -30,6 +30,20 @@ export class StorageImplService extends StorageService {
   async getItem<T>(key: string): Promise<T> {
     const dbKey = await this.storage?.get(key);
     return !dbKey ? null : dbKey;
+  }
+
+  async getMultipleItems(keys: string[]): Promise<any> {
+    try {
+      const storage: any = {};
+
+      for (const key of keys) {
+        storage[key] = await this.getItem(key);
+      }
+
+      return storage;
+    } catch (e) {
+      return null;
+    }
   }
 
   async getAllItems(): Promise<any> {

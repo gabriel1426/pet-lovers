@@ -25,8 +25,10 @@ export class AppComponent {
   async _initializeApp() {
     await this.platform.ready();
     await this.storageService.init();
-    await StatusBar.setBackgroundColor({ color: '#000000' });
-    await StatusBar.setStyle({ style: Style.Dark });
-    await ScreenOrientation.lock({ type: OrientationType.PORTRAIT });
+    if (this.platform.is('capacitor')) {
+      await StatusBar.setBackgroundColor({ color: '#000000' });
+      await StatusBar.setStyle({ style: Style.Dark });
+      await ScreenOrientation.lock({ type: OrientationType.PORTRAIT });
+    }
   }
 }

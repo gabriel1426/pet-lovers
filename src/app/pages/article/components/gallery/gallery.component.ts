@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
@@ -23,6 +22,7 @@ export class GalleryComponent implements OnInit, OnChanges {
   public images: Image[];
 
   public bulletActive = 1;
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private petService: PetsService
@@ -74,9 +74,5 @@ export class GalleryComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.changeDetector.detectChanges();
-  }
-
-  test() {
-    console.log('test');
   }
 }

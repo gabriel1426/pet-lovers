@@ -12,7 +12,7 @@
   "ok": "Ok",
   "breedWeight": "Can weigh between {{ weight }} kg",
   "breedHeight": "Can measure between {{ height }} cm",
-  "breedLifeSpanCats": "Has a life expectancy of between {{ years }} years",
+  "breedLifeSpanCats": "Has a life expectancy of between {{ years }}",
   "breedLifeSpanDogs": "Has a life expectancy of between {{ years }}",
   "favorites": "Saved"
 }

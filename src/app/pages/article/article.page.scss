@@ -1,12 +1,22 @@
 .article {
 
   &__header {
-    justify-content: space-between;
-    padding: 2rem 2rem;
-    position: absolute;
-    display: flex;
+    background-color: rgba(255, 255, 255, 0);
+    transition: background-color 0.5s ease;
+    position: fixed;
     width: 100%;
-    z-index: 2;
+    z-index: 6;
+
+    .bridge {
+      background-color: rgba(255, 255, 255, 0);
+      transition: background-color 0.5s ease;
+    }
+  }
+
+  &__header-options {
+    justify-content: space-between;
+    padding: 2rem 2rem 1rem;
+    display: flex;
   }
 
   &__back {
@@ -35,8 +45,6 @@
 
   &__content {
     padding: 1rem;
-    overflow: auto;
-    height: 100vh;
   }
 
   &__title {
@@ -48,12 +56,13 @@
     margin: 1.5rem 0rem 1rem;;
   }
 
-  &__facts{
+  &__facts {
     display: flex;
     color: var(--facts-color);
     flex-wrap: wrap;
-    gap: 8px;
-    font-size: 13px;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+
     p {
       margin: 0;
     }
@@ -69,7 +78,7 @@
     padding: 1rem;
 
     img {
-      padding-right: 4px;
+      padding-right: 0.25rem;
     }
   }
 
@@ -79,26 +88,26 @@
 
   &__description {
     color: var(--text-color);
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 400;
     line-height: 140%;
-    margin-top: 20px;
+    margin-top: 1.25rem;
   }
 
-  &__characteristics{
+  &__characteristics {
     span {
       color: black;
-      font-size: 18px;
+      font-size: 1.125rem;
       font-weight: 700;
       line-height: 36px;
     }
 
-    p {
+    ul {
       color: var(--text-color);
-      margin: 12px 0;
-      font-size: 14px;
+      margin: 0.75rem 0;
+      padding-left: 1rem;
+      font-size: 0.875rem;
       font-weight: 400;
-      line-height: 140%;
     }
   }
 
@@ -108,7 +117,7 @@
     ion-button {
       --border-radius: 100px;
       height: 50px;
-      font-size: 18px;
+      font-size: 1.125rem;
       text-transform: none;
     }
   }

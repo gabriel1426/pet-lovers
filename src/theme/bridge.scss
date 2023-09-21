@@ -1,0 +1,8 @@
+.bridge {
+  mask-image: linear-gradient(to bottom, black 10%, transparent 80%);
+  position: absolute;
+  background: white;
+  height: 20px;
+  width: 100%;
+  z-index: 2;
+}
