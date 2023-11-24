@@ -61,8 +61,6 @@ export class ArticlePage implements OnInit, AfterViewInit {
     this.getCharacteristics();
     this.getWebs();
     this.favorites = await this.storage.getItem<Pet[]>('favorites') || [];
-    console.log(this.favorites)
-    console.log(this.pet)
     this.isFavorite = !!this.favorites.find((elemento) => elemento.id === this.pet.id)
 
   }
